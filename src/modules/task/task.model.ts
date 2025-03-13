@@ -1,6 +1,12 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "../user/user.model";
 
+export enum TaskStatus {
+    TO_DO,
+    IN_PROGRESS,
+    DONE,
+}
+
 @Entity()
 export class Task {
 
@@ -15,8 +21,8 @@ export class Task {
 
 	@Column({
 		type: "enum",
-		enum: ["to_do", "in_progress", "done"],
-		default: "to_do"
+		enum: TaskStatus,
+		default: TaskStatus.TO_DO,
 	})
 
 	@Column()
@@ -26,7 +32,7 @@ export class Task {
 	updateDate: Date;
 
 	@Column()
-	userId: number;
+	userId: string;
 
 	@ManyToOne(() => User, (user) => user.tasks)
 	user: User;

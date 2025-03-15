@@ -11,9 +11,4 @@ export class CreateUserDto {
 	@IsString()
 	password: string;
 
-	constructor(data: CreateUserDto) {
-		this.fullName = data.fullName;
-		this.email = data.email;
-		this.password = data.password;
-	}
 }

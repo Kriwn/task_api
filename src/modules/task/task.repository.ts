@@ -20,9 +20,16 @@ export class TaskRepository {
 		return await this.taskRepository.findOne({where: {id}});
 	}
 
-	async createTask(data: CreateTaskDto): Promise<Task> {
+	async getTaskByUserId(userId: string): Promise<Task[]> {
+		return await this.taskRepository.find({where: {userId}});
+	}
 
-		const task = this.taskRepository.create(data);
+	async createTask(userId: string, data: CreateTaskDto): Promise<Task> {
+
+		const task = this.taskRepository.create({
+			...data,
+			userId
+		});
 		await this.taskRepository.save(task);
 		return task;
 	}
@@ -38,13 +45,13 @@ export class TaskRepository {
 
 	}
 
-	async deleteTask(id: number): Promise<string | null> {
+	async deleteTask(id: number): Promise<Task | null> {
 		const task = await this.taskRepository.findOne({where: {id}});
 		if (!task)
 		{
 			return null
 		}
-		return null
 		await this.taskRepository.delete(id);
+		return task;
 	}
 }

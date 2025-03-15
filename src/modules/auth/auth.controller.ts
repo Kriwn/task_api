@@ -5,9 +5,8 @@ import { JwtService } from "@nestjs/jwt";
 import { CreateUserDto } from "../user/dto/create-user.dto";
 
 
-async function EncryptPassword(password: string): Promise<string> {
+export default async function EncryptPassword(password: string): Promise<string> {
 	const hash = await bcrypt.hash(password, 10);
-	console.log(hash);
 	return hash;
 }
 
@@ -21,13 +20,11 @@ export class AuthController {
 
 	@Post("signup")
 	async signUp(@Body() body: CreateUserDto): Promise<string> {
-		const createData = new CreateUserDto(body);
 		const finedUser = await this.userRepository.findByEmail(body.email);
 		if (finedUser) {
 			throw new BadRequestException("User already exists");
 		}
 		const hashedPassword = await EncryptPassword(body.password);
-		console.log(body.fullName);
 		body.password = hashedPassword;
 		await this.userRepository.createUser(body);
 		return "User created successfully";

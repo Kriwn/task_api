@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "../user/user.model";
 
 export enum TaskStatus {
@@ -25,10 +25,10 @@ export class Task {
 		default: TaskStatus.TO_DO,
 	})
 
-	@Column()
+	@CreateDateColumn()
 	creationDate: Date;
 
-	@Column()
+	@UpdateDateColumn()
 	updateDate: Date;
 
 	@Column()

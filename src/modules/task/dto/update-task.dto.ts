@@ -14,10 +14,4 @@ export class UpdateTaskDto {
 	@IsString()
 	@IsOptional()
 	description: string;
-
-	constructor(data: UpdateTaskDto) {
-		this.title = data.title;
-		this.userId = data.userId;
-		this.description = data.description;
-	}
 }

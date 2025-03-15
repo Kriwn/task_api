@@ -12,11 +12,6 @@ export class UpdateUserDto {
 
   @IsString()
   @IsOptional()
-  password: string;
+  password?: string;
 
-  constructor(data: UpdateUserDto) {
-    this.fullName = data.fullName;
-    this.email = data.email;
-    this.password = data.password;
-  }
 }

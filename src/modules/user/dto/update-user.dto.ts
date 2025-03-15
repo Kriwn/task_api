@@ -6,7 +6,9 @@ export class UpdateUserDto {
   @IsOptional()
   fullName: string;
 
-  @IsEmail()
+  @IsEmail({}, {
+    message: "Not email fromat"
+  })
   @IsOptional()
   email: string;
 

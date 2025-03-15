@@ -5,7 +5,9 @@ export class CreateUserDto {
 	@IsString()
 	fullName: string;
 
-	@IsEmail()
+	@IsEmail({}, {
+		message: "Not email froma"
+	})
 	email: string;
 
 	@IsString()

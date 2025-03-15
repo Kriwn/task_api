@@ -1,12 +1,12 @@
 import { BadRequestException, Body, Controller, Inject, NotFoundException, Post } from "@nestjs/common";
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import { UserRepository } from "../user/user.repository";
 import { JwtService } from "@nestjs/jwt";
 import { CreateUserDto } from "../user/dto/create-user.dto";
 
 
-export default async function EncryptPassword(password: string): Promise<string> {
-	const hash = await bcrypt.hash(password, 10);
+export default function EncryptPassword(password: string): string {
+	const hash = bcrypt.hashSync(password, 10);
 	return hash;
 }
 
@@ -24,7 +24,8 @@ export class AuthController {
 		if (finedUser) {
 			throw new BadRequestException("User already exists");
 		}
-		const hashedPassword = await EncryptPassword(body.password);
+		const hashedPassword = EncryptPassword(body.password);
+		console.log(hashedPassword);
 		body.password = hashedPassword;
 		await this.userRepository.createUser(body);
 		return "User created successfully";
